@@ -5,8 +5,9 @@
 
 .contact-container {
   display: flex;
-  gap: 4rem;
-  max-width: 1200px;
+  align-items: stretch;
+  gap: 3rem;
+  max-width: 1150px;
   margin: 0 auto;
 }
 
@@ -15,75 +16,176 @@
 }
 
 .contact-info h2 {
+  font-family: 'Poppins', sans-serif;
   font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--primary-color);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-lead {
+  color: #557;
+  margin-bottom: 2rem;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
 }
 
 .info-item {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.info-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(46, 125, 50, 0.15);
+}
+
+.icon-badge {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary-color), #43a047);
+  box-shadow: 0 4px 10px rgba(46, 125, 50, 0.25);
+}
+
+.icon-badge svg {
+  width: 22px;
+  height: 22px;
 }
 
 .whatsapp-card {
-  background-color: var(--white);
-  padding: 2rem;
-  border-radius: 8px;
-  margin-top: 2rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  background: var(--white);
+  padding: 1.75rem;
+  border-radius: 14px;
+  margin-top: 1.5rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.whatsapp-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 0.4rem;
+}
+
+.whatsapp-card p {
+  color: #557;
+  margin-bottom: 1.2rem;
 }
 
 .btn-whatsapp-large {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Poppins', sans-serif;
   background-color: #25d366;
   color: var(--white);
-  padding: 1rem 2rem;
+  padding: 0.85rem 1.8rem;
   text-decoration: none;
-  border-radius: 4px;
-  font-weight: bold;
-  margin-top: 1rem;
+  border-radius: 50px;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-whatsapp-large svg {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-whatsapp-large:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(37, 211, 102, 0.45);
 }
 
 .contact-form {
   flex: 1;
-  background-color: var(--white);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  background: var(--white);
+  padding: 2.25rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.35rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
   font-weight: 500;
+  color: #444;
+  margin-bottom: 0.45rem;
 }
 
-.form-group input, .form-group textarea {
+.form-group input,
+.form-group textarea {
   width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.85rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fafafa;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.form-group textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  background: var(--white);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.12);
 }
 
 .btn-submit {
   width: 100%;
-  background-color: var(--primary-color);
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--primary-color), #43a047);
   color: var(--white);
   padding: 1rem;
   border: none;
-  border-radius: 4px;
-  font-weight: bold;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(46, 125, 50, 0.4);
 }
 
 @media (max-width: 768px) {
   .contact-container {
     flex-direction: column;
+    gap: 2rem;
   }
 }
