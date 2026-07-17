@@ -110,8 +110,88 @@
   80%        { transform: rotate(5deg); }
 }
 
+.navbar-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  z-index: 1101;
+}
+
+.navbar-toggle svg {
+  width: 26px;
+  height: 26px;
+}
+
+.navbar-mobile-panel {
+  display: none;
+}
+
+.navbar-scrim {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .navbar-links {
-    display: none; /* We'll add a mobile menu later */
+  .navbar-links,
+  .navbar-cta {
+    display: none;
+  }
+
+  .navbar-toggle {
+    display: flex;
+  }
+
+  .navbar-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 20, 10, 0.45);
+    z-index: 1099;
+  }
+
+  .navbar-mobile-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(78vw, 320px);
+    background: var(--white);
+    padding: 6rem 2rem 2.5rem;
+    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.18);
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1100;
+  }
+
+  .navbar-mobile-panel.open {
+    transform: translateX(0);
+  }
+
+  .navbar-mobile-panel ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .navbar-mobile-panel a {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
+  .navbar-mobile-panel .btn-call {
+    justify-content: center;
+    margin-top: auto;
   }
 }

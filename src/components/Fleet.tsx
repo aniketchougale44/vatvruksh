@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import './Fleet.css';
 
 const cars = [
@@ -70,7 +70,6 @@ const ChevronIcon = ({ direction }: { direction: 'left' | 'right' }) => (
 const Fleet = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [imgIndex, setImgIndex] = useState(0);
-  const pausedRef = useRef(false);
 
   const goTo = (index: number) => {
     setActiveIndex(index);
@@ -80,21 +79,15 @@ const Fleet = () => {
   const prev = () => goTo((activeIndex - 1 + cars.length) % cars.length);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      if (!pausedRef.current) {
-        setActiveIndex((p) => (p + 1) % cars.length);
-        setImgIndex(0);
-      }
-    }, 6000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
     const activeCarImages = cars[activeIndex].images;
     const id = setInterval(() => {
-      if (!pausedRef.current) {
-        setImgIndex((p) => (p + 1) % activeCarImages.length);
-      }
+      setImgIndex((prev) => {
+        if (prev + 1 < activeCarImages.length) {
+          return prev + 1;
+        }
+        setActiveIndex((p) => (p + 1) % cars.length);
+        return 0;
+      });
     }, 2400);
     return () => clearInterval(id);
   }, [activeIndex]);
@@ -104,11 +97,7 @@ const Fleet = () => {
       <h2>Our Premium Fleet</h2>
       <p>Choose from our wide range of well-maintained vehicles</p>
 
-      <div
-        className="fleet-stage"
-        onMouseEnter={() => { pausedRef.current = true; }}
-        onMouseLeave={() => { pausedRef.current = false; }}
-      >
+      <div className="fleet-stage">
         <button className="fleet-nav prev" onClick={prev} aria-label="Previous vehicle">
           <ChevronIcon direction="left" />
         </button>

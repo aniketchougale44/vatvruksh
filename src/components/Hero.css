@@ -1,6 +1,7 @@
 .hero-container {
   position: relative;
-  height: 80vh;
+  height: 86vh;
+  min-height: 560px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,13 +27,44 @@
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background:
+    linear-gradient(180deg, rgba(6, 14, 8, 0.55) 0%, rgba(6, 12, 8, 0.4) 40%, rgba(4, 10, 6, 0.85) 100%),
+    radial-gradient(120% 90% at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.45) 100%);
   z-index: 1;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
+  max-width: 780px;
+  animation: heroRise 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  margin-bottom: 1.25rem;
+}
+
+.hero-kicker::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secondary-color), #ffca28);
+  box-shadow: 0 0 12px rgba(249, 168, 37, 0.8);
 }
 
 .hero-content h1 {
@@ -42,7 +74,7 @@
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: 1rem;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content p {
@@ -50,12 +82,13 @@
   font-size: 1.35rem;
   font-weight: 400;
   letter-spacing: 0.01em;
-  margin-bottom: 2rem;
+  margin-bottom: 2.25rem;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .hero-badges {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.75rem;
   display: flex;
   gap: 0.75rem;
   justify-content: center;
@@ -63,22 +96,32 @@
 }
 
 .hero-badges .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: 'Poppins', sans-serif;
-  background-color: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(8px);
   color: var(--white);
-  padding: 0.5rem 1.1rem;
+  padding: 0.55rem 1.15rem;
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  backdrop-filter: blur(6px);
+  transition: border-color 0.25s ease, background-color 0.25s ease;
 }
 
-.hero-badges .badge::before {
-  content: '✓ ';
+.hero-badges .badge:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(249, 168, 37, 0.5);
+}
+
+.hero-badges .badge svg {
+  width: 17px;
+  height: 17px;
   color: var(--secondary-color);
-  font-weight: 700;
+  flex-shrink: 0;
 }
 
 .hero-actions {
@@ -90,6 +133,9 @@
 
 .hero-actions .btn-primary,
 .btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-family: 'Poppins', sans-serif;
   padding: 0.9rem 2.2rem;
   border-radius: 999px;
@@ -97,24 +143,37 @@
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: 0.01em;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
 .hero-actions .btn-primary {
-  background-color: var(--primary-color);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--secondary-color), #ffb300);
+  color: #3e2723;
+  box-shadow: 0 12px 26px rgba(249, 168, 37, 0.4);
 }
 
 .btn-whatsapp {
-  background-color: #25d366;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
   color: var(--white);
 }
 
-.hero-actions .btn-primary:hover,
+.btn-whatsapp svg {
+  width: 19px;
+  height: 19px;
+  color: #25d366;
+}
+
+.hero-actions .btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(249, 168, 37, 0.5);
+}
+
 .btn-whatsapp:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  transform: translateY(-3px);
+  background-color: rgba(37, 211, 102, 0.18);
+  border-color: rgba(37, 211, 102, 0.5);
 }
 
 @media (max-width: 768px) {
@@ -131,6 +190,13 @@
   .btn-whatsapp {
     width: 100%;
     max-width: 320px;
+    justify-content: center;
     text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-content {
+    animation: none;
   }
 }

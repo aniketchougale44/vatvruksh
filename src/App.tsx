@@ -11,12 +11,8 @@ function Home() {
   return (
     <>
       <Hero />
-      <div id="services">
-        <Services />
-      </div>
-      <div id="fleet">
-        <Fleet />
-      </div>
+      <Services />
+      <Fleet />
       <Contact />
     </>
   );

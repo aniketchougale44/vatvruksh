@@ -1,3 +1,4 @@
+import { useState, FormEvent } from 'react';
 import './Contact.css';
 
 const svgProps = {
@@ -36,6 +37,18 @@ const WhatsAppIcon = () => (
 );
 
 const Contact = () => {
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [trip, setTrip] = useState('');
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const message = `Hi, I'd like to enquire about a booking.\nName: ${name}\nPhone: ${phone}\nTrip Details: ${trip}`;
+    window.open(`https://wa.me/910000000000?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    setSent(true);
+  };
+
   return (
     <section className="contact-section" id="contact">
       <div className="contact-container">
@@ -68,20 +81,37 @@ const Contact = () => {
         </div>
 
         <div className="contact-form">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Full Name</label>
-              <input type="text" placeholder="Enter your name" />
+              <input
+                type="text"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
             </div>
             <div className="form-group">
               <label>Phone Number</label>
-              <input type="tel" placeholder="Enter your phone number" />
+              <input
+                type="tel"
+                placeholder="Enter your phone number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+              />
             </div>
             <div className="form-group">
               <label>Trip Details</label>
-              <textarea placeholder="e.g. Kolhapur to Pune, 15th July"></textarea>
+              <textarea
+                placeholder="e.g. Kolhapur to Pune, 15th July"
+                value={trip}
+                onChange={(e) => setTrip(e.target.value)}
+              ></textarea>
             </div>
             <button type="submit" className="btn-submit">Send Inquiry</button>
+            {sent && <p className="form-sent-note">Opening WhatsApp with your details&hellip;</p>}
           </form>
         </div>
       </div>

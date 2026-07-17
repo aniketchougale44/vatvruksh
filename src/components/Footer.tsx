@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Footer.css';
 
 const svgProps = {
@@ -24,10 +25,9 @@ const Footer = () => {
         <div className="footer-links">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="#fleet">Our Fleet</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/fleet">Our Fleet</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
           </ul>
         </div>
 

@@ -183,6 +183,14 @@
   box-shadow: 0 10px 24px rgba(46, 125, 50, 0.4);
 }
 
+.form-sent-note {
+  margin-top: 1rem;
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 @media (max-width: 768px) {
   .contact-container {
     flex-direction: column;
