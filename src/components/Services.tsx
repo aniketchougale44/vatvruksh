@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Services.css';
+import SightseeingModal from './SightseeingModal';
 
 const svgProps = {
   viewBox: '0 0 24 24',
@@ -62,6 +63,7 @@ const services = [
 
 const Services = () => {
   const stepperRef = useRef<HTMLDivElement>(null);
+  const [showSightseeing, setShowSightseeing] = useState(false);
 
   useEffect(() => {
     const steps = stepperRef.current?.querySelectorAll('.step') ?? [];
@@ -84,19 +86,37 @@ const Services = () => {
     <section className="services-section" id="services">
       <h2>Our Services</h2>
       <div className="stepper" ref={stepperRef}>
-        {services.map((service, index) => (
-          <div className="step" key={index} style={{ transitionDelay: `${index * 0.12}s` }}>
-            <div className="step-marker">
-              <div className="step-icon" style={{ animationDelay: `${index * 0.4}s` }}>
-                {service.icon}
+        {services.map((service, index) => {
+          const isSightseeing = service.title === 'Local Sightseeing';
+          return (
+            <div
+              className={`step${isSightseeing ? ' step-clickable' : ''}`}
+              key={index}
+              style={{ transitionDelay: `${index * 0.12}s` }}
+              onClick={isSightseeing ? () => setShowSightseeing(true) : undefined}
+              role={isSightseeing ? 'button' : undefined}
+              tabIndex={isSightseeing ? 0 : undefined}
+              onKeyDown={
+                isSightseeing
+                  ? (e) => {
+                      if (e.key === 'Enter' || e.key === ' ') setShowSightseeing(true);
+                    }
+                  : undefined
+              }
+            >
+              <div className="step-marker">
+                <div className="step-icon" style={{ animationDelay: `${index * 0.4}s` }}>
+                  {service.icon}
+                </div>
+              </div>
+              <div className="step-content">
+                <h3>{service.title}</h3>
               </div>
             </div>
-            <div className="step-content">
-              <h3>{service.title}</h3>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+      {showSightseeing && <SightseeingModal onClose={() => setShowSightseeing(false)} />}
     </section>
   );
 };

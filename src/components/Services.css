@@ -52,6 +52,26 @@
   transform: translateY(0);
 }
 
+.step-clickable {
+  cursor: pointer;
+}
+
+.step-clickable:hover .step-icon,
+.step-clickable:focus-visible .step-icon {
+  box-shadow: 0 10px 22px rgba(249, 168, 37, 0.45);
+}
+
+.step-clickable:hover h3,
+.step-clickable:focus-visible h3 {
+  color: var(--secondary-color);
+}
+
+.step-clickable:focus-visible {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 6px;
+  border-radius: 8px;
+}
+
 /* Connecting line between steps */
 .step:not(:last-child)::after {
   content: '';

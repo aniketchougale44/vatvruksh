@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Fleet.css';
 
 const cars = [
@@ -39,78 +39,128 @@ const cars = [
   }
 ];
 
-const CarCard = ({ car, isActive }: { car: typeof cars[0], isActive: boolean }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const SeatIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 11V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v5" />
+    <path d="M5 11h11a2 2 0 0 1 2 2v3H7a2 2 0 0 1-2-2Z" />
+    <path d="M5 16v3M18 16v3" />
+  </svg>
+);
 
-  useEffect(() => {
-    if (!isActive) {
-      setCurrentIndex(0); // Reset to first image when inactive
-      return;
-    }
+const SnowflakeIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2v20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1" />
+    <path d="M12 2 9.5 4.5M12 2l2.5 2.5M12 22l-2.5-2.5M12 22l2.5-2.5" />
+  </svg>
+);
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % car.images.length);
-    }, 2200);
+const DriverIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="8" r="3.2" />
+    <path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7" />
+  </svg>
+);
 
-    return () => clearInterval(interval);
-  }, [isActive, car.images.length]);
-
-  return (
-    <div className="car-card">
-      <img key={currentIndex} src={car.images[currentIndex]} alt={car.name} className="car-img" />
-      <div className="car-info">
-        <h3>{car.name}</h3>
-        <p>{car.type} • {car.seats} Seats • AC</p>
-        <div className="car-badge">Includes Driver</div>
-        <a href={`https://wa.me/910000000000?text=I'm interested in booking ${car.name}`} className="btn-book">Book Now</a>
-      </div>
-    </div>
-  );
-};
+const ChevronIcon = ({ direction }: { direction: 'left' | 'right' }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    {direction === 'left' ? <path d="M15 18l-6-6 6-6" /> : <path d="M9 18l6-6-6-6" />}
+  </svg>
+);
 
 const Fleet = () => {
-  const [activeCarIndex, setActiveCarIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [imgIndex, setImgIndex] = useState(0);
+  const pausedRef = useRef(false);
 
-  const nextCar = () => {
-    setActiveCarIndex((prev) => (prev + 1) % cars.length);
+  const goTo = (index: number) => {
+    setActiveIndex(index);
+    setImgIndex(0);
   };
+  const next = () => goTo((activeIndex + 1) % cars.length);
+  const prev = () => goTo((activeIndex - 1 + cars.length) % cars.length);
 
-  const prevCar = () => {
-    setActiveCarIndex((prev) => (prev - 1 + cars.length) % cars.length);
-  };
-
-  // Auto-rotate every 10 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextCar();
-    }, 10000);
-
-    return () => clearInterval(interval);
+    const id = setInterval(() => {
+      if (!pausedRef.current) {
+        setActiveIndex((p) => (p + 1) % cars.length);
+        setImgIndex(0);
+      }
+    }, 6000);
+    return () => clearInterval(id);
   }, []);
+
+  useEffect(() => {
+    const activeCarImages = cars[activeIndex].images;
+    const id = setInterval(() => {
+      if (!pausedRef.current) {
+        setImgIndex((p) => (p + 1) % activeCarImages.length);
+      }
+    }, 2400);
+    return () => clearInterval(id);
+  }, [activeIndex]);
 
   return (
     <section className="fleet-section" id="fleet">
       <h2>Our Premium Fleet</h2>
       <p>Choose from our wide range of well-maintained vehicles</p>
-      <div className="fleet-carousel-container">
-        <button className="carousel-btn prev" onClick={prevCar}>&lt;</button>
-        
-        <div className="carousel-wrapper">
-          {cars.map((car, index) => {
-            let position = 'hidden';
-            if (index === activeCarIndex) position = 'active';
-            else if (index === (activeCarIndex - 1 + cars.length) % cars.length) position = 'prev';
-            else if (index === (activeCarIndex + 1) % cars.length) position = 'next';
 
-            return (
-              <div key={index} className={`carousel-item ${position}`}>
-                <CarCard car={car} isActive={index === activeCarIndex} />
+      <div
+        className="fleet-stage"
+        onMouseEnter={() => { pausedRef.current = true; }}
+        onMouseLeave={() => { pausedRef.current = false; }}
+      >
+        <button className="fleet-nav prev" onClick={prev} aria-label="Previous vehicle">
+          <ChevronIcon direction="left" />
+        </button>
+
+        {cars.map((car, index) => {
+          const isActive = index === activeIndex;
+          return (
+            <div key={car.name} className={`fleet-slide${isActive ? ' active' : ''}`}>
+              <img
+                src={isActive ? car.images[imgIndex] : car.images[0]}
+                alt={car.name}
+                className="fleet-slide-bg"
+              />
+              <div className="fleet-slide-scrim" />
+              <span className="fleet-slide-tag">{car.type}</span>
+              <div className="fleet-slide-content">
+                <span className="fleet-slide-index">
+                  {String(index + 1).padStart(2, '0')} / {String(cars.length).padStart(2, '0')}
+                </span>
+                <h3>{car.name}</h3>
+                <div className="fleet-slide-specs">
+                  <span><SeatIcon />{car.seats} Seats</span>
+                  {car.ac && <span><SnowflakeIcon />AC</span>}
+                  <span><DriverIcon />Driver</span>
+                </div>
+                <a
+                  href={`https://wa.me/910000000000?text=I'm interested in booking ${car.name}`}
+                  className="btn-book-premium"
+                >
+                  Book Now
+                </a>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
 
-        <button className="carousel-btn next" onClick={nextCar}>&gt;</button>
+        <button className="fleet-nav next" onClick={next} aria-label="Next vehicle">
+          <ChevronIcon direction="right" />
+        </button>
+      </div>
+
+      <div className="fleet-thumbs">
+        {cars.map((car, index) => (
+          <button
+            key={car.name}
+            className={`fleet-thumb${index === activeIndex ? ' active' : ''}`}
+            onClick={() => goTo(index)}
+          >
+            <img src={car.images[0]} alt={car.name} />
+            <span>{car.name}</span>
+          </button>
+        ))}
       </div>
     </section>
   );
