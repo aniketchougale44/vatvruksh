@@ -3,6 +3,15 @@ import './Hero.css';
 const Hero = () => {
   return (
     <section className="hero-container">
+      <video
+        className="hero-video"
+        src="/innova_crysta.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+      <div className="hero-overlay" />
       <div className="hero-content">
         <h1>Premium Car Rent in Kolhapur</h1>
         <p>Safe, Reliable & Affordable Travel with Professional Drivers</p>
