@@ -13,7 +13,7 @@ const Navbar = () => {
         <li><Link to="/contact">Contact</Link></li>
       </ul>
       <div className="navbar-cta">
-        <a href="tel:+910000000000" className="btn-call">Call Now</a>
+        <a href="tel:+910000000000" className="btn-call"><span className="btn-call-icon">📞</span> Call Now</a>
       </div>
     </nav>
   );

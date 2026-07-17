@@ -50,14 +50,14 @@ const CarCard = ({ car, isActive }: { car: typeof cars[0], isActive: boolean }) 
 
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % car.images.length);
-    }, 1000);
+    }, 2200);
 
     return () => clearInterval(interval);
   }, [isActive, car.images.length]);
 
   return (
     <div className="car-card">
-      <img src={car.images[currentIndex]} alt={car.name} />
+      <img key={currentIndex} src={car.images[currentIndex]} alt={car.name} className="car-img" />
       <div className="car-info">
         <h3>{car.name}</h3>
         <p>{car.type} • {car.seats} Seats • AC</p>
@@ -97,10 +97,11 @@ const Fleet = () => {
         
         <div className="carousel-wrapper">
           {cars.map((car, index) => {
-            let position = 'next';
+            let position = 'hidden';
             if (index === activeCarIndex) position = 'active';
-            if (index === (activeCarIndex - 1 + cars.length) % cars.length) position = 'prev';
-            
+            else if (index === (activeCarIndex - 1 + cars.length) % cars.length) position = 'prev';
+            else if (index === (activeCarIndex + 1) % cars.length) position = 'next';
+
             return (
               <div key={index} className={`carousel-item ${position}`}>
                 <CarCard car={car} isActive={index === activeCarIndex} />
