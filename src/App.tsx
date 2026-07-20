@@ -5,6 +5,7 @@ import Fleet from './components/Fleet';
 import Services from './components/Services';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { LanguageProvider } from './i18n/LanguageContext';
 import './App.css';
 
 function Home() {
@@ -20,19 +21,21 @@ function Home() {
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/fleet" element={<Fleet />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <LanguageProvider>
+      <Router>
+        <div className="app">
+          <Navbar />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/cars" element={<Fleet />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </LanguageProvider>
   );
 }
 

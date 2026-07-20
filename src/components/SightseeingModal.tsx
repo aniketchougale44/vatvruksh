@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLanguage } from '../i18n/LanguageContext';
 import './SightseeingModal.css';
 
 interface SightseeingModalProps {
@@ -9,7 +10,7 @@ const spots = [
   {
     name: 'Jyotiba Temple (Wadi Ratnagiri)',
     slug: 'jyotiba-temple',
-    blurb: 'Historic hilltop shrine famed for its vibrant annual yatra.',
+    blurb: 'Old hilltop temple, famous for its big yearly fair.',
     illustration: (
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -39,7 +40,7 @@ const spots = [
   {
     name: 'Panhala Fort',
     slug: 'panhala-fort',
-    blurb: 'One of the largest Deccan hill forts, rich with Maratha history.',
+    blurb: 'One of the largest hill forts in India, full of Maratha history.',
     illustration: (
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -70,7 +71,7 @@ const spots = [
   {
     name: 'Mahalakshmi Temple (Ambabai Temple)',
     slug: 'mahalakshmi-temple',
-    blurb: 'Iconic 8th-century temple and the spiritual heart of Kolhapur.',
+    blurb: 'Famous old temple, the heart of Kolhapur since the 8th century.',
     illustration: (
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -105,7 +106,7 @@ const spots = [
   {
     name: 'Balumama Temple (Adamapur)',
     slug: 'balumama-temple',
-    blurb: 'Revered pastoral shrine amid open farmland, honouring the folk saint Balumama.',
+    blurb: 'A loved temple in open farmland, for the folk saint Balumama.',
     illustration: (
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -143,7 +144,7 @@ const spots = [
   {
     name: 'Narsobawadi (Narsobachi Wadi)',
     slug: 'narsobawadi',
-    blurb: 'Sacred riverside town at the Krishna-Panchganga confluence, steady with pilgrims.',
+    blurb: 'Holy riverside town where two rivers meet, always full of pilgrims.',
     illustration: (
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -176,7 +177,7 @@ const spots = [
   {
     name: 'Khidrapur (Kopeshwar Temple)',
     slug: 'khidrapur-kopeshwar',
-    blurb: 'Intricately carved 12th-century Hemadpanti stone temple on the Krishna riverbank.',
+    blurb: 'A beautifully carved old stone temple by the Krishna river.',
     illustration: (
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -210,7 +211,7 @@ const spots = [
   {
     name: 'New Palace (Chhatrapati Shahu Museum)',
     slug: 'new-palace',
-    blurb: 'Royal Shahu-era palace showcasing regal artefacts and armoury.',
+    blurb: 'Royal palace with old artefacts and weapons on display.',
     illustration: (
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -245,7 +246,7 @@ const spots = [
   {
     name: 'Rankala Lake',
     slug: 'rankala-lake',
-    blurb: 'Scenic lakeside promenade, perfect for a relaxed evening walk.',
+    blurb: 'Pretty lakeside path, great for an evening walk.',
     illustration: (
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -276,7 +277,7 @@ const spots = [
   {
     name: 'Kaneri Math (Siddhagiri Gramjivan Museum)',
     slug: 'kaneri-math',
-    blurb: 'Ancient monastery with a life-size open-air museum of rural Maharashtrian life.',
+    blurb: 'Old monastery with a big open-air museum showing village life.',
     illustration: (
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -316,24 +317,23 @@ interface SpotMediaProps {
 }
 
 const SpotMedia = ({ slug, name, illustration }: SpotMediaProps) => {
-  const [videoFailed, setVideoFailed] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
 
-  if (videoFailed) return illustration;
+  if (imageFailed) return illustration;
 
   return (
-    <video
-      src={`/sightseeing/${slug}.mp4`}
-      aria-label={name}
-      autoPlay
-      muted
-      loop
-      playsInline
-      onError={() => setVideoFailed(true)}
+    <img
+      src={`/sightseeing/${slug}.jpg`}
+      alt={name}
+      loading="lazy"
+      onError={() => setImageFailed(true)}
     />
   );
 };
 
 const SightseeingModal = ({ onClose }: SightseeingModalProps) => {
+  const { t } = useLanguage();
+
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -352,8 +352,8 @@ const SightseeingModal = ({ onClose }: SightseeingModalProps) => {
         <button className="sightseeing-close" onClick={onClose} aria-label="Close">
           &times;
         </button>
-        <h3>Local Sightseeing</h3>
-        <p className="sightseeing-subtitle">Popular spots our local experts can take you to</p>
+        <h3>{t('sightseeing.title')}</h3>
+        <p className="sightseeing-subtitle">{t('sightseeing.subtitle')}</p>
         <div className="sightseeing-grid">
           {spots.map((spot) => (
             <div className="sightseeing-card" key={spot.name}>

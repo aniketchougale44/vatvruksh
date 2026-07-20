@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../i18n/LanguageContext';
 import './Footer.css';
 
 const svgProps = {
@@ -11,28 +12,27 @@ const svgProps = {
 };
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="footer-container">
       <div className="footer-content">
         <div className="footer-brand">
           <h3>Vatvruksh Tours and Travels</h3>
-          <p>
-            Your reliable travel partner in Kolhapur. We specialize in premium car
-            rental services with professional drivers for local and outstation trips.
-          </p>
+          <p>{t('footer.about')}</p>
         </div>
 
         <div className="footer-links">
-          <h4>Quick Links</h4>
+          <h4>{t('footer.quickLinks')}</h4>
           <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/fleet">Our Fleet</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/">{t('nav.home')}</Link></li>
+            <li><Link to="/cars">{t('nav.fleet')}</Link></li>
+            <li><Link to="/contact">{t('nav.contact')}</Link></li>
           </ul>
         </div>
 
         <div className="footer-contact">
-          <h4>Contact Us</h4>
+          <h4>{t('footer.contactUs')}</h4>
           <a href="https://maps.google.com/?q=Kolhapur" className="footer-contact-item">
             <span className="footer-icon">
               <svg {...svgProps}>
@@ -42,13 +42,13 @@ const Footer = () => {
             </span>
             Kolhapur, Maharashtra
           </a>
-          <a href="tel:+910000000000" className="footer-contact-item">
+          <a href="tel:+919881037257" className="footer-contact-item">
             <span className="footer-icon">
               <svg {...svgProps}>
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
               </svg>
             </span>
-            +91 00000 00000
+            +91 98810 37257
           </a>
           <a href="mailto:info@vatvruksh.com" className="footer-contact-item">
             <span className="footer-icon">
@@ -63,7 +63,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Vatvruksh Tours and Travels. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Vatvruksh Tours and Travels. {t('footer.rights')}</p>
       </div>
     </footer>
   );

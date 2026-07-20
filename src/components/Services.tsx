@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import './Services.css';
 import SightseeingModal from './SightseeingModal';
+import OutstationModal from './OutstationModal';
+import PickupDropModal from './PickupDropModal';
+import AirportModal from './AirportModal';
+import BusinessTravelModal from './BusinessTravelModal';
+import { useLanguage } from '../i18n/LanguageContext';
+
+type ModalKey = 'sightseeing' | 'outstation' | 'pickup-drop' | 'airport' | 'business';
 
 const svgProps = {
   viewBox: '0 0 24 24',
@@ -13,8 +20,9 @@ const svgProps = {
 
 const services = [
   {
-    title: 'Local Sightseeing',
-    description: 'Explore Mahalaxmi Temple, Panhala Fort, Rankala Lake and more with our local experts.',
+    key: 'sightseeing' as ModalKey,
+    titleKey: 'services.sightseeing.title',
+    descKey: 'services.sightseeing.desc',
     icon: (
       <svg {...svgProps}>
         <line x1="3" y1="22" x2="21" y2="22" />
@@ -27,8 +35,9 @@ const services = [
     ),
   },
   {
-    title: 'Outstation Trips',
-    description: 'Comfortable long-distance travel to Pune, Mumbai, Goa, or Konkan with expert drivers.',
+    key: 'outstation' as ModalKey,
+    titleKey: 'services.outstation.title',
+    descKey: 'services.outstation.desc',
     icon: (
       <svg {...svgProps}>
         <path d="M5 17H3.5A1.5 1.5 0 0 1 2 15.5V13c0-.7.4-1.3 1-1.6l2-4A2 2 0 0 1 6.8 6h10.4a2 2 0 0 1 1.8 1.4l2 4c.6.3 1 .9 1 1.6v2.5a1.5 1.5 0 0 1-1.5 1.5H19" />
@@ -40,8 +49,20 @@ const services = [
     ),
   },
   {
-    title: 'Airport Transfers',
-    description: 'Punctual pick-up and drop services to nearby airports with luggage assistance.',
+    key: 'pickup-drop' as ModalKey,
+    titleKey: 'services.pickupdrop.title',
+    descKey: 'services.pickupdrop.desc',
+    icon: (
+      <svg {...svgProps}>
+        <circle cx="12" cy="9" r="2.5" />
+        <path d="M12 21c-4-4.5-7-8.2-7-11.5A7 7 0 0 1 19 9.5C19 12.8 16 16.5 12 21Z" />
+      </svg>
+    ),
+  },
+  {
+    key: 'airport' as ModalKey,
+    titleKey: 'services.airport.title',
+    descKey: 'services.airport.desc',
     icon: (
       <svg {...svgProps}>
         <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.4L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.7.5 1.2.4l.5-.2c.5-.3.7-.8.6-1.4Z" />
@@ -49,8 +70,9 @@ const services = [
     ),
   },
   {
-    title: 'Corporate Travel',
-    description: 'Professional car rental solutions for business meetings and corporate events.',
+    key: 'business' as ModalKey,
+    titleKey: 'services.corporate.title',
+    descKey: 'services.corporate.desc',
     icon: (
       <svg {...svgProps}>
         <rect x="2" y="7" width="20" height="14" rx="2" />
@@ -63,7 +85,8 @@ const services = [
 
 const Services = () => {
   const stepperRef = useRef<HTMLDivElement>(null);
-  const [showSightseeing, setShowSightseeing] = useState(false);
+  const [activeModal, setActiveModal] = useState<ModalKey | null>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const steps = stepperRef.current?.querySelectorAll('.step') ?? [];
@@ -84,22 +107,23 @@ const Services = () => {
 
   return (
     <section className="services-section" id="services">
-      <h2>Our Services</h2>
+      <h2>{t('services.heading')}</h2>
       <div className="stepper" ref={stepperRef}>
         {services.map((service, index) => {
-          const isSightseeing = service.title === 'Local Sightseeing';
+          const modalKey = service.key;
+          const openModal = modalKey ? () => setActiveModal(modalKey) : undefined;
           return (
             <div
-              className={`step${isSightseeing ? ' step-clickable' : ''}`}
+              className={`step${openModal ? ' step-clickable' : ''}`}
               key={index}
               style={{ transitionDelay: `${index * 0.12}s` }}
-              onClick={isSightseeing ? () => setShowSightseeing(true) : undefined}
-              role={isSightseeing ? 'button' : undefined}
-              tabIndex={isSightseeing ? 0 : undefined}
+              onClick={openModal}
+              role={openModal ? 'button' : undefined}
+              tabIndex={openModal ? 0 : undefined}
               onKeyDown={
-                isSightseeing
+                openModal
                   ? (e) => {
-                      if (e.key === 'Enter' || e.key === ' ') setShowSightseeing(true);
+                      if (e.key === 'Enter' || e.key === ' ') openModal();
                     }
                   : undefined
               }
@@ -110,13 +134,17 @@ const Services = () => {
                 </div>
               </div>
               <div className="step-content">
-                <h3>{service.title}</h3>
+                <h3>{t(service.titleKey)}</h3>
               </div>
             </div>
           );
         })}
       </div>
-      {showSightseeing && <SightseeingModal onClose={() => setShowSightseeing(false)} />}
+      {activeModal === 'sightseeing' && <SightseeingModal onClose={() => setActiveModal(null)} />}
+      {activeModal === 'outstation' && <OutstationModal onClose={() => setActiveModal(null)} />}
+      {activeModal === 'pickup-drop' && <PickupDropModal onClose={() => setActiveModal(null)} />}
+      {activeModal === 'airport' && <AirportModal onClose={() => setActiveModal(null)} />}
+      {activeModal === 'business' && <BusinessTravelModal onClose={() => setActiveModal(null)} />}
     </section>
   );
 };

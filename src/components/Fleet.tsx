@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../i18n/LanguageContext';
 import './Fleet.css';
 
 const cars = [
   {
     name: 'Force Urbania',
-    type: 'MUV',
+    type: 'Mini Bus',
     seats: 12,
     ac: true,
     images: ['/cars/Force Urbania/1.jpeg', '/cars/Force Urbania/2.jpeg', '/cars/Force Urbania/3.jpeg', '/cars/Force Urbania/4.jpeg', '/cars/Force Urbania/5.jpeg']
@@ -18,14 +19,14 @@ const cars = [
   },
   {
     name: 'Innova Crysta',
-    type: 'Premium MUV',
+    type: 'Premium Family Car',
     seats: 7,
     ac: true,
     images: ['/cars/Innova Crysta/1.jpeg', '/cars/Innova Crysta/2.jpeg', '/cars/Innova Crysta/3.jpeg', '/cars/Innova Crysta/4.jpeg', '/cars/Innova Crysta/5.jpeg']
   },
   {
     name: 'Kia Carens',
-    type: 'MUV',
+    type: 'Family Car',
     seats: 7,
     ac: true,
     images: ['/cars/Kia Carens/1.jpeg', '/cars/Kia Carens/2.jpeg', '/cars/Kia Carens/3.jpeg', '/cars/Kia Carens/4.jpeg', '/cars/Kia Carens/5.jpeg']
@@ -70,6 +71,7 @@ const ChevronIcon = ({ direction }: { direction: 'left' | 'right' }) => (
 const Fleet = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [imgIndex, setImgIndex] = useState(0);
+  const { t } = useLanguage();
 
   const goTo = (index: number) => {
     setActiveIndex(index);
@@ -94,8 +96,8 @@ const Fleet = () => {
 
   return (
     <section className="fleet-section" id="fleet">
-      <h2>Our Premium Fleet</h2>
-      <p>Choose from our wide range of well-maintained vehicles</p>
+      <h2>{t('fleet.heading')}</h2>
+      <p>{t('fleet.subtitle')}</p>
 
       <div className="fleet-stage">
         <button className="fleet-nav prev" onClick={prev} aria-label="Previous vehicle">
@@ -119,15 +121,12 @@ const Fleet = () => {
                 </span>
                 <h3>{car.name}</h3>
                 <div className="fleet-slide-specs">
-                  <span><SeatIcon />{car.seats} Seats</span>
-                  {car.ac && <span><SnowflakeIcon />AC</span>}
-                  <span><DriverIcon />Driver</span>
+                  <span><SeatIcon />{car.seats} {t('fleet.seats')}</span>
+                  {car.ac && <span><SnowflakeIcon />{t('fleet.ac')}</span>}
+                  <span><DriverIcon />{t('fleet.driver')}</span>
                 </div>
-                <a
-                  href={`https://wa.me/910000000000?text=I'm interested in booking ${car.name}`}
-                  className="btn-book-premium"
-                >
-                  Book Now
+                <a href="tel:+919881037257" className="btn-book-premium">
+                  {t('fleet.bookNow')}
                 </a>
               </div>
             </div>

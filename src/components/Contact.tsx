@@ -1,4 +1,5 @@
 import { useState, FormEvent } from 'react';
+import { useLanguage } from '../i18n/LanguageContext';
 import './Contact.css';
 
 const svgProps = {
@@ -41,11 +42,12 @@ const Contact = () => {
   const [phone, setPhone] = useState('');
   const [trip, setTrip] = useState('');
   const [sent, setSent] = useState(false);
+  const { t } = useLanguage();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const message = `Hi, I'd like to enquire about a booking.\nName: ${name}\nPhone: ${phone}\nTrip Details: ${trip}`;
-    window.open(`https://wa.me/910000000000?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    window.open(`https://wa.me/919881037257?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
     setSent(true);
   };
 
@@ -53,17 +55,17 @@ const Contact = () => {
     <section className="contact-section" id="contact">
       <div className="contact-container">
         <div className="contact-info">
-          <h2>Get in Touch</h2>
-          <p className="contact-lead">Book your ride today or ask for a quote.</p>
+          <h2>{t('contact.heading')}</h2>
+          <p className="contact-lead">{t('contact.lead')}</p>
 
           <div className="info-list">
             <a href="https://maps.google.com/?q=Kolhapur" className="info-item">
               <span className="icon-badge"><LocationIcon /></span>
               <span>Vatvruksh Tours and Travels, Kolhapur, Maharashtra</span>
             </a>
-            <a href="tel:+910000000000" className="info-item">
+            <a href="tel:+919881037257" className="info-item">
               <span className="icon-badge"><PhoneIcon /></span>
-              <span>+91 00000 00000</span>
+              <span>+91 98810 37257</span>
             </a>
             <a href="mailto:info@vatvruksh.com" className="info-item">
               <span className="icon-badge"><MailIcon /></span>
@@ -72,10 +74,10 @@ const Contact = () => {
           </div>
 
           <div className="whatsapp-card">
-            <h3>Quick Booking</h3>
-            <p>Chat with us on WhatsApp for instant booking.</p>
-            <a href="https://wa.me/910000000000" className="btn-whatsapp-large">
-              <WhatsAppIcon /> Chat on WhatsApp
+            <h3>{t('contact.quickBooking')}</h3>
+            <p>{t('contact.quickBookingDesc')}</p>
+            <a href="https://wa.me/919881037257" className="btn-whatsapp-large">
+              <WhatsAppIcon /> {t('contact.chatWhatsapp')}
             </a>
           </div>
         </div>
@@ -83,35 +85,35 @@ const Contact = () => {
         <div className="contact-form">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label>Full Name</label>
+              <label>{t('contact.form.name')}</label>
               <input
                 type="text"
-                placeholder="Enter your name"
+                placeholder={t('contact.form.namePlaceholder')}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label>Phone Number</label>
+              <label>{t('contact.form.phone')}</label>
               <input
                 type="tel"
-                placeholder="Enter your phone number"
+                placeholder={t('contact.form.phonePlaceholder')}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label>Trip Details</label>
+              <label>{t('contact.form.trip')}</label>
               <textarea
-                placeholder="e.g. Kolhapur to Pune, 15th July"
+                placeholder={t('contact.form.tripPlaceholder')}
                 value={trip}
                 onChange={(e) => setTrip(e.target.value)}
               ></textarea>
             </div>
-            <button type="submit" className="btn-submit">Send Inquiry</button>
-            {sent && <p className="form-sent-note">Opening WhatsApp with your details&hellip;</p>}
+            <button type="submit" className="btn-submit">{t('contact.form.submit')}</button>
+            {sent && <p className="form-sent-note">{t('contact.form.sentNote')}</p>}
           </form>
         </div>
       </div>

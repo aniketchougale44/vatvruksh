@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n/LanguageContext';
 import './Hero.css';
 
 const DriverIcon = () => (
@@ -28,6 +29,8 @@ const WhatsAppIcon = () => (
 );
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="hero-container">
       <video
@@ -40,19 +43,19 @@ const Hero = () => {
       />
       <div className="hero-overlay" />
       <div className="hero-content">
-        <span className="hero-kicker">Kolhapur&apos;s Trusted Chauffeur Service</span>
-        <h1>Premium Car Rent in Kolhapur</h1>
-        <p>Safe, Reliable &amp; Affordable Travel with Professional Drivers</p>
+        <span className="hero-kicker">{t('hero.kicker')}</span>
+        <h1>{t('hero.title')}</h1>
+        <p>{t('hero.subtitle')}</p>
         <div className="hero-badges">
-          <span className="badge"><DriverIcon />With Driver Only</span>
-          <span className="badge"><SparkleIcon />Sanitized Cars</span>
-          <span className="badge"><ClockIcon />24/7 Support</span>
+          <span className="badge"><DriverIcon />{t('hero.badge.driver')}</span>
+          <span className="badge"><SparkleIcon />{t('hero.badge.sanitized')}</span>
+          <span className="badge"><ClockIcon />{t('hero.badge.support')}</span>
         </div>
         <div className="hero-actions">
-          <a href="#booking" className="btn-primary">Book Your Ride</a>
-          <a href="https://wa.me/910000000000" className="btn-whatsapp">
+          <a href="tel:+919881037257" className="btn-primary">{t('hero.bookRide')}</a>
+          <a href="https://wa.me/919881037257" className="btn-whatsapp">
             <WhatsAppIcon />
-            WhatsApp Inquiry
+            {t('hero.whatsapp')}
           </a>
         </div>
       </div>

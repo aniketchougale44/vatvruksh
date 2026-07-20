@@ -1,0 +1,288 @@
+.pickupdrop-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 10, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.5rem;
+  animation: pickupdropOverlayFade 0.25s ease;
+}
+
+.pickupdrop-modal {
+  position: relative;
+  background-color: var(--bg-color);
+  background-image:
+    radial-gradient(700px 380px at 8% -15%, rgba(46, 125, 50, 0.09), transparent 60%),
+    radial-gradient(600px 340px at 100% 110%, rgba(249, 168, 37, 0.14), transparent 55%);
+  border-radius: 20px;
+  max-width: 920px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 2.75rem 2.25rem 2.25rem;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  animation: pickupdropModalPop 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pickupdrop-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  margin-bottom: 0.75rem;
+}
+
+.pickupdrop-kicker::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secondary-color), #ffca28);
+  box-shadow: 0 0 10px rgba(249, 168, 37, 0.7);
+}
+
+.pickupdrop-modal h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  position: relative;
+  display: inline-block;
+}
+
+.pickupdrop-modal h3::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.pickupdrop-subtitle {
+  color: #666;
+  margin: 1.4rem 0 2.25rem;
+  font-size: 0.98rem;
+}
+
+.pickupdrop-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #f1f1f1;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.pickupdrop-close:hover {
+  background: var(--secondary-color);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+.pickupdrop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.1rem;
+}
+
+.pd-card {
+  position: relative;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ffffff 0%, #fafcf9 100%);
+  border: 1px solid rgba(46, 125, 50, 0.1);
+  box-shadow: 0 6px 20px rgba(15, 30, 15, 0.08);
+  text-align: left;
+  padding: 1.3rem 1.3rem 1.1rem;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.pd-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pd-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 36px rgba(15, 30, 15, 0.16);
+  border-color: rgba(249, 168, 37, 0.35);
+}
+
+.pd-card:hover::before {
+  opacity: 1;
+}
+
+.pd-route {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.pd-city {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text-color);
+  flex: 1;
+  min-width: 0;
+}
+
+.pd-city:last-child {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.pd-city span:last-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.pd-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.pd-pin svg {
+  width: 15px;
+  height: 15px;
+}
+
+.pd-pin.origin {
+  background: rgba(46, 125, 50, 0.12);
+  color: var(--primary-color);
+}
+
+.pd-pin.dest {
+  background: rgba(249, 168, 37, 0.16);
+  color: var(--secondary-color);
+}
+
+.pd-route-line {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(46, 125, 50, 0.35);
+  margin-top: -1.2rem;
+}
+
+.pd-route-line svg {
+  width: 20px;
+  height: 20px;
+}
+
+.pd-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed rgba(46, 125, 50, 0.18);
+}
+
+.pd-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--primary-color);
+  background: rgba(46, 125, 50, 0.08);
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.pd-book-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary-color), #43a047);
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 8px 18px rgba(46, 125, 50, 0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  flex-shrink: 0;
+}
+
+.pd-book-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.pd-book-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(46, 125, 50, 0.42);
+}
+
+.pickupdrop-note {
+  margin: 1.9rem 0 0;
+  font-size: 0.85rem;
+  color: #777;
+  font-style: italic;
+}
+
+@keyframes pickupdropOverlayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pickupdropModalPop {
+  from { opacity: 0; transform: scale(0.94) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .pickupdrop-modal {
+    padding: 2.25rem 1.25rem 1.5rem;
+  }
+  .pickupdrop-modal h3 {
+    font-size: 1.6rem;
+  }
+  .pd-city {
+    font-size: 0.85rem;
+  }
+}
