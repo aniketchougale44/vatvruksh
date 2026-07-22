@@ -163,7 +163,6 @@
   background: linear-gradient(180deg, #ffffff 0%, #fafcf9 100%);
   border: 1px solid rgba(46, 125, 50, 0.1);
   box-shadow: 0 6px 20px rgba(15, 30, 15, 0.08);
-  padding: 1.3rem 1.3rem 1.1rem;
   overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
@@ -175,6 +174,7 @@
   left: 0;
   right: 0;
   height: 3px;
+  z-index: 3;
   background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -190,73 +190,143 @@
   opacity: 1;
 }
 
-.airport-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.9rem;
+.airport-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: rgba(46, 125, 50, 0.08);
 }
 
-.airport-plane-badge {
+.airport-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.airport-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.airport-slide.active {
+  opacity: 1;
+}
+
+.airport-photo-fallback {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(46, 125, 50, 0.1);
   color: var(--primary-color);
+}
+
+.airport-photo-fallback svg {
+  width: 34%;
+  height: 34%;
+  opacity: 0.5;
   transform: rotate(45deg);
 }
 
-.airport-plane-badge svg {
-  width: 19px;
-  height: 19px;
+.airport-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.45) 100%);
+  pointer-events: none;
+}
+
+.airport-dots {
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.airport-dot-btn {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.airport-dot-btn.active {
+  width: 18px;
+  border-radius: 4px;
+  background: #fff;
 }
 
 .airport-code {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: 10px;
   font-family: 'Poppins', sans-serif;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: var(--secondary-color);
-  background: rgba(249, 168, 37, 0.12);
+  color: #3e2723;
+  background: linear-gradient(135deg, var(--secondary-color), #ffb300);
   padding: 0.28rem 0.6rem;
   border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(249, 168, 37, 0.4);
+}
+
+.airport-duration-badge {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+}
+
+.airport-duration-badge svg {
+  width: 12px;
+  height: 12px;
+}
+
+.airport-card-body {
+  padding: 1rem 1.2rem 1.1rem;
 }
 
 .airport-card h4 {
   font-family: 'Poppins', sans-serif;
   font-size: 1.05rem;
   color: var(--primary-color);
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.25rem;
 }
 
-.airport-meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+.airport-distance {
+  display: block;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #667066;
-  margin-bottom: 0.6rem;
-}
-
-.airport-duration {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
   color: var(--secondary-color, #f9a825);
-}
-
-.airport-duration svg {
-  width: 12px;
-  height: 12px;
-}
-
-.airport-dot {
-  color: #bbb;
+  margin-bottom: 0.5rem;
 }
 
 .airport-card p {

@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useSyncedSlideIndex } from '../hooks/useSyncedSlideIndex';
+import { usePhotoSlots } from '../hooks/usePhotoSlots';
 import './AirportModal.css';
 
 interface AirportModalProps {
@@ -60,6 +62,7 @@ const features = [
 const airports = [
   {
     name: 'Kolhapur Airport',
+    slug: 'kolhapur',
     code: 'KLH',
     distance: '~8 km',
     duration: '15 - 20 min',
@@ -67,6 +70,7 @@ const airports = [
   },
   {
     name: 'Belgaum Airport',
+    slug: 'belgaum',
     code: 'IXG',
     distance: '~90 km',
     duration: '2 - 2.5 hrs',
@@ -74,6 +78,7 @@ const airports = [
   },
   {
     name: 'Hubli Airport',
+    slug: 'hubli',
     code: 'HBX',
     distance: '~150 km',
     duration: '3 - 3.5 hrs',
@@ -81,6 +86,7 @@ const airports = [
   },
   {
     name: 'Goa Airport (Dabolim / Manohar)',
+    slug: 'goa',
     code: 'GOI / GOX',
     distance: '~185 km',
     duration: '4 - 4.5 hrs',
@@ -88,6 +94,7 @@ const airports = [
   },
   {
     name: 'Pune Airport',
+    slug: 'pune',
     code: 'PNQ',
     distance: '~230 km',
     duration: '4.5 - 5 hrs',
@@ -95,12 +102,72 @@ const airports = [
   },
   {
     name: 'Mumbai Airport',
+    slug: 'mumbai',
     code: 'BOM',
     distance: '~390 km',
     duration: '7 - 8 hrs',
     blurb: 'Best for international departures, with early or overnight pickups available.',
   },
 ];
+
+interface AirportPhotoSliderProps {
+  slug: string;
+  name: string;
+}
+
+const AirportPhotoSlider = ({ slug, name }: AirportPhotoSliderProps) => {
+  const photos = usePhotoSlots('/airport', slug);
+  const [paused, setPaused] = useState(false);
+  const [manualIndex, setManualIndex] = useState<number | null>(null);
+  const syncedIndex = useSyncedSlideIndex(photos.length, paused);
+  const index = manualIndex ?? syncedIndex;
+
+  useEffect(() => {
+    if (!paused) setManualIndex(null);
+  }, [paused]);
+
+  if (photos.length === 0) {
+    return (
+      <div className="airport-photo-fallback">
+        <PlaneIcon />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="airport-slider"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {photos.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={`${name} ${i + 1}`}
+          loading="lazy"
+          className={`airport-slide${i === index ? ' active' : ''}`}
+        />
+      ))}
+      {photos.length > 1 && (
+        <div className="airport-dots">
+          {photos.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`airport-dot-btn${i === index ? ' active' : ''}`}
+              aria-label={`Show ${name} photo ${i + 1}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setManualIndex(i);
+              }}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const AirportModal = ({ onClose }: AirportModalProps) => {
   const { t } = useLanguage();
@@ -142,26 +209,24 @@ const AirportModal = ({ onClose }: AirportModalProps) => {
         <div className="airport-grid">
           {airports.map((ap) => (
             <div className="airport-card" key={ap.name}>
-              <div className="airport-card-top">
-                <span className="airport-plane-badge">
-                  <PlaneIcon />
-                </span>
+              <div className="airport-photo">
+                <AirportPhotoSlider slug={ap.slug} name={ap.name} />
+                <div className="airport-scrim" />
                 <span className="airport-code">{ap.code}</span>
-              </div>
-              <h4>{ap.name}</h4>
-              <div className="airport-meta">
-                <span>{ap.distance} {t('airport.fromKolhapur')}</span>
-                <span className="airport-dot">&bull;</span>
-                <span className="airport-duration">
+                <span className="airport-duration-badge">
                   <ClockIcon /> {ap.duration}
                 </span>
               </div>
-              <p>{ap.blurb}</p>
-              <div className="airport-card-footer">
-                <span className="airport-tag">{t('common.oneWayRoundTrip')}</span>
-                <a className="airport-book-btn" href={CALL_HREF}>
-                  <PhoneIcon /> {t('common.book')}
-                </a>
+              <div className="airport-card-body">
+                <h4>{ap.name}</h4>
+                <span className="airport-distance">{ap.distance} {t('airport.fromKolhapur')}</span>
+                <p>{ap.blurb}</p>
+                <div className="airport-card-footer">
+                  <span className="airport-tag">{t('common.oneWayRoundTrip')}</span>
+                  <a className="airport-book-btn" href={CALL_HREF}>
+                    <PhoneIcon /> {t('common.book')}
+                  </a>
+                </div>
               </div>
             </div>
           ))}

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useSyncedSlideIndex } from '../hooks/useSyncedSlideIndex';
+import { usePhotoSlots } from '../hooks/usePhotoSlots';
 import './OutstationModal.css';
 
 interface OutstationModalProps {
@@ -123,62 +125,21 @@ const destinations = [
   },
 ];
 
-const MAX_PHOTOS_PER_DEST = 5;
-const SLIDE_INTERVAL_MS = 3500;
-
-const useDestinationPhotos = (slug: string) => {
-  const [photos, setPhotos] = useState<string[]>([]);
-
-  useEffect(() => {
-    let cancelled = false;
-    const candidates = Array.from(
-      { length: MAX_PHOTOS_PER_DEST },
-      (_, i) => `/outstation/${slug}/${i + 1}.jpg`
-    );
-
-    Promise.all(
-      candidates.map(
-        (src) =>
-          new Promise<string | null>((resolve) => {
-            const img = new Image();
-            img.onload = () => resolve(src);
-            img.onerror = () => resolve(null);
-            img.src = src;
-          })
-      )
-    ).then((results) => {
-      if (!cancelled) setPhotos(results.filter((src): src is string => src !== null));
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [slug]);
-
-  return photos;
-};
-
 interface DestinationSliderProps {
   slug: string;
   name: string;
 }
 
 const DestinationSlider = ({ slug, name }: DestinationSliderProps) => {
-  const photos = useDestinationPhotos(slug);
-  const [index, setIndex] = useState(0);
+  const photos = usePhotoSlots('/outstation', slug);
   const [paused, setPaused] = useState(false);
+  const [manualIndex, setManualIndex] = useState<number | null>(null);
+  const syncedIndex = useSyncedSlideIndex(photos.length, paused);
+  const index = manualIndex ?? syncedIndex;
 
   useEffect(() => {
-    setIndex(0);
-  }, [photos.length]);
-
-  useEffect(() => {
-    if (photos.length <= 1 || paused) return;
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % photos.length);
-    }, SLIDE_INTERVAL_MS);
-    return () => clearInterval(id);
-  }, [photos.length, paused]);
+    if (!paused) setManualIndex(null);
+  }, [paused]);
 
   if (photos.length === 0) {
     return <div className="outstation-icon-fallback">{routeIcon}</div>;
@@ -209,7 +170,7 @@ const DestinationSlider = ({ slug, name }: DestinationSliderProps) => {
               aria-label={`Show ${name} photo ${i + 1}`}
               onClick={(e) => {
                 e.stopPropagation();
-                setIndex(i);
+                setManualIndex(i);
               }}
             />
           ))}

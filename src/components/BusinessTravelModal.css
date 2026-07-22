@@ -164,7 +164,6 @@
   background: linear-gradient(180deg, #ffffff 0%, #fafcf9 100%);
   border: 1px solid rgba(46, 125, 50, 0.1);
   box-shadow: 0 6px 20px rgba(15, 30, 15, 0.08);
-  padding: 1.3rem 1.3rem 1.1rem;
   overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
@@ -176,6 +175,7 @@
   left: 0;
   right: 0;
   height: 3px;
+  z-index: 3;
   background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -191,21 +191,111 @@
   opacity: 1;
 }
 
-.business-usecase-icon {
+.business-usecase-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: rgba(46, 125, 50, 0.08);
+}
+
+.business-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.business-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.business-slide.active {
+  opacity: 1;
+}
+
+.business-photo-fallback {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: rgba(46, 125, 50, 0.1);
   color: var(--primary-color);
-  margin-bottom: 0.9rem;
+}
+
+.business-photo-fallback svg {
+  width: 34%;
+  height: 34%;
+  opacity: 0.5;
+}
+
+.business-usecase-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+}
+
+.business-dots {
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.business-dot-btn {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.business-dot-btn.active {
+  width: 18px;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.business-usecase-icon {
+  position: absolute;
+  z-index: 2;
+  right: 12px;
+  bottom: -18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary-color), #43a047);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(46, 125, 50, 0.35);
+  border: 3px solid #fff;
 }
 
 .business-usecase-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
+}
+
+.business-usecase-body {
+  padding: 1.6rem 1.2rem 1.1rem;
 }
 
 .business-usecase-card h4 {

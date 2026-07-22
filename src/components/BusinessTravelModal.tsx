@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useSyncedSlideIndex } from '../hooks/useSyncedSlideIndex';
+import { usePhotoSlots } from '../hooks/usePhotoSlots';
 import './BusinessTravelModal.css';
 
 interface BusinessTravelModalProps {
@@ -78,11 +80,67 @@ const features = [
 ];
 
 const useCases = [
-  { icon: <BriefcaseIcon />, titleKey: 'business.usecase.meetings.title', blurbKey: 'business.usecase.meetings.blurb' },
-  { icon: <UsersIcon />, titleKey: 'business.usecase.events.title', blurbKey: 'business.usecase.events.blurb' },
-  { icon: <PlaneSmallIcon />, titleKey: 'business.usecase.guests.title', blurbKey: 'business.usecase.guests.blurb' },
-  { icon: <MapPinsIcon />, titleKey: 'business.usecase.multicity.title', blurbKey: 'business.usecase.multicity.blurb' },
+  { slug: 'meetings', icon: <BriefcaseIcon />, titleKey: 'business.usecase.meetings.title', blurbKey: 'business.usecase.meetings.blurb' },
+  { slug: 'events', icon: <UsersIcon />, titleKey: 'business.usecase.events.title', blurbKey: 'business.usecase.events.blurb' },
+  { slug: 'guests', icon: <PlaneSmallIcon />, titleKey: 'business.usecase.guests.title', blurbKey: 'business.usecase.guests.blurb' },
+  { slug: 'multicity', icon: <MapPinsIcon />, titleKey: 'business.usecase.multicity.title', blurbKey: 'business.usecase.multicity.blurb' },
 ];
+
+interface UsecasePhotoSliderProps {
+  slug: string;
+  name: string;
+  icon: JSX.Element;
+}
+
+const UsecasePhotoSlider = ({ slug, name, icon }: UsecasePhotoSliderProps) => {
+  const photos = usePhotoSlots('/business', slug);
+  const [paused, setPaused] = useState(false);
+  const [manualIndex, setManualIndex] = useState<number | null>(null);
+  const syncedIndex = useSyncedSlideIndex(photos.length, paused);
+  const index = manualIndex ?? syncedIndex;
+
+  useEffect(() => {
+    if (!paused) setManualIndex(null);
+  }, [paused]);
+
+  if (photos.length === 0) {
+    return <div className="business-photo-fallback">{icon}</div>;
+  }
+
+  return (
+    <div
+      className="business-slider"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {photos.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={`${name} ${i + 1}`}
+          loading="lazy"
+          className={`business-slide${i === index ? ' active' : ''}`}
+        />
+      ))}
+      {photos.length > 1 && (
+        <div className="business-dots">
+          {photos.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`business-dot-btn${i === index ? ' active' : ''}`}
+              aria-label={`Show ${name} photo ${i + 1}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setManualIndex(i);
+              }}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const BusinessTravelModal = ({ onClose }: BusinessTravelModalProps) => {
   const { t } = useLanguage();
@@ -122,13 +180,22 @@ const BusinessTravelModal = ({ onClose }: BusinessTravelModalProps) => {
         </div>
 
         <div className="business-usecase-grid">
-          {useCases.map((u) => (
-            <div className="business-usecase-card" key={u.titleKey}>
-              <span className="business-usecase-icon">{u.icon}</span>
-              <h4>{t(u.titleKey)}</h4>
-              <p>{t(u.blurbKey)}</p>
-            </div>
-          ))}
+          {useCases.map((u) => {
+            const title = t(u.titleKey);
+            return (
+              <div className="business-usecase-card" key={u.titleKey}>
+                <div className="business-usecase-photo">
+                  <UsecasePhotoSlider slug={u.slug} name={title} icon={u.icon} />
+                  <div className="business-usecase-scrim" />
+                  <span className="business-usecase-icon">{u.icon}</span>
+                </div>
+                <div className="business-usecase-body">
+                  <h4>{title}</h4>
+                  <p>{t(u.blurbKey)}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="business-cta">

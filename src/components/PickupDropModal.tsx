@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useSyncedSlideIndex } from '../hooks/useSyncedSlideIndex';
+import { usePhotoSlots } from '../hooks/usePhotoSlots';
 import './PickupDropModal.css';
 
 interface PickupDropModalProps {
@@ -28,15 +30,74 @@ const PhoneIcon = () => (
 const CALL_HREF = 'tel:+919881037257';
 
 const destinations = [
-  'Belgaum',
-  'Pune',
-  'Mumbai',
-  'Ahilyanagar',
-  'Goa',
-  'Sambhajinagar',
-  'Hubli',
-  'Nashik',
+  { name: 'Belgaum', slug: 'belgaum' },
+  { name: 'Pune', slug: 'pune' },
+  { name: 'Mumbai', slug: 'mumbai' },
+  { name: 'Ahilyanagar', slug: 'ahilyanagar' },
+  { name: 'Goa', slug: 'goa' },
+  { name: 'Sambhajinagar', slug: 'sambhajinagar' },
+  { name: 'Hubli', slug: 'hubli' },
+  { name: 'Nashik', slug: 'nashik' },
 ];
+
+interface RoutePhotoSliderProps {
+  slug: string;
+  name: string;
+}
+
+const RoutePhotoSlider = ({ slug, name }: RoutePhotoSliderProps) => {
+  const photos = usePhotoSlots('/pickupdrop', slug);
+  const [paused, setPaused] = useState(false);
+  const [manualIndex, setManualIndex] = useState<number | null>(null);
+  const syncedIndex = useSyncedSlideIndex(photos.length, paused);
+  const index = manualIndex ?? syncedIndex;
+
+  useEffect(() => {
+    if (!paused) setManualIndex(null);
+  }, [paused]);
+
+  if (photos.length === 0) {
+    return (
+      <div className="pd-photo-fallback">
+        <PinIcon />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="pd-slider"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {photos.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={`${name} ${i + 1}`}
+          loading="lazy"
+          className={`pd-slide${i === index ? ' active' : ''}`}
+        />
+      ))}
+      {photos.length > 1 && (
+        <div className="pd-dots">
+          {photos.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`pd-dot-btn${i === index ? ' active' : ''}`}
+              aria-label={`Show ${name} photo ${i + 1}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setManualIndex(i);
+              }}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const PickupDropModal = ({ onClose }: PickupDropModalProps) => {
   const { t } = useLanguage();
@@ -64,29 +125,35 @@ const PickupDropModal = ({ onClose }: PickupDropModalProps) => {
         <p className="pickupdrop-subtitle">{t('pickupdrop.subtitle')}</p>
         <div className="pickupdrop-grid">
           {destinations.map((destination) => (
-            <div className="pd-card" key={destination}>
-              <div className="pd-route">
-                <div className="pd-city">
-                  <span className="pd-pin origin">
-                    <PinIcon />
-                  </span>
-                  <span>Kolhapur</span>
-                </div>
-                <span className="pd-route-line">
-                  <ArrowIcon />
-                </span>
-                <div className="pd-city">
-                  <span className="pd-pin dest">
-                    <PinIcon />
-                  </span>
-                  <span>{destination}</span>
-                </div>
+            <div className="pd-card" key={destination.name}>
+              <div className="pd-photo">
+                <RoutePhotoSlider slug={destination.slug} name={destination.name} />
+                <div className="pd-scrim" />
               </div>
-              <div className="pd-card-footer">
-                <span className="pd-tag">{t('common.oneWayRoundTrip')}</span>
-                <a className="pd-book-btn" href={CALL_HREF}>
-                  <PhoneIcon /> {t('common.book')}
-                </a>
+              <div className="pd-card-body">
+                <div className="pd-route">
+                  <div className="pd-city">
+                    <span className="pd-pin origin">
+                      <PinIcon />
+                    </span>
+                    <span>Kolhapur</span>
+                  </div>
+                  <span className="pd-route-line">
+                    <ArrowIcon />
+                  </span>
+                  <div className="pd-city">
+                    <span className="pd-pin dest">
+                      <PinIcon />
+                    </span>
+                    <span>{destination.name}</span>
+                  </div>
+                </div>
+                <div className="pd-card-footer">
+                  <span className="pd-tag">{t('common.oneWayRoundTrip')}</span>
+                  <a className="pd-book-btn" href={CALL_HREF}>
+                    <PhoneIcon /> {t('common.book')}
+                  </a>
+                </div>
               </div>
             </div>
           ))}
