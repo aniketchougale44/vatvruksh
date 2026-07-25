@@ -59,13 +59,17 @@ const Contact = () => {
           <p className="contact-lead">{t('contact.lead')}</p>
 
           <div className="info-list">
-            <a href="https://maps.google.com/?q=Kolhapur" className="info-item">
+            <a href="https://maps.google.com/?q=Vatvruksh+Tours+and+Travels+Jaysingrao+Park+Garden+Kagal" className="info-item" target="_blank" rel="noopener noreferrer">
               <span className="icon-badge"><LocationIcon /></span>
-              <span>Vatvruksh Tours and Travels, Kolhapur, Maharashtra</span>
+              <span>Vatvruksh Tours and Travels, Jaysingrao Park Garden, Main Road, near Garden, Kagal, Maharashtra 416216</span>
+            </a>
+            <a href="https://maps.google.com/?q=EG+52/151+Daulat+Nagar+Kolhapur" className="info-item" target="_blank" rel="noopener noreferrer">
+              <span className="icon-badge"><LocationIcon /></span>
+              <span>EG 52/151, Daulat Nagar, front of Panayachi Taki, Kolhapur, Maharashtra – 416008</span>
             </a>
             <a href="tel:+919881037257" className="info-item">
               <span className="icon-badge"><PhoneIcon /></span>
-              <span>+91 98810 37257</span>
+              <span>+91 98810 37257, +91 83900 44084</span>
             </a>
             <a href="mailto:info@vatvruksh.com" className="info-item">
               <span className="icon-badge"><MailIcon /></span>
@@ -76,7 +80,12 @@ const Contact = () => {
           <div className="whatsapp-card">
             <h3>{t('contact.quickBooking')}</h3>
             <p>{t('contact.quickBookingDesc')}</p>
-            <a href="https://wa.me/919881037257" className="btn-whatsapp-large">
+            <a
+              href={`https://wa.me/919881037257?text=${encodeURIComponent("Hi, I'd like to enquire about your cars for rent.")}`}
+              className="btn-whatsapp-large"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <WhatsAppIcon /> {t('contact.chatWhatsapp')}
             </a>
           </div>

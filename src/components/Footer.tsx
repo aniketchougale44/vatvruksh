@@ -33,14 +33,23 @@ const Footer = () => {
 
         <div className="footer-contact">
           <h4>{t('footer.contactUs')}</h4>
-          <a href="https://maps.google.com/?q=Kolhapur" className="footer-contact-item">
+          <a href="https://maps.google.com/?q=Vatvruksh+Tours+and+Travels+Jaysingrao+Park+Garden+Kagal" className="footer-contact-item" target="_blank" rel="noopener noreferrer">
             <span className="footer-icon">
               <svg {...svgProps}>
                 <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                 <circle cx="12" cy="10" r="3" />
               </svg>
             </span>
-            Kolhapur, Maharashtra
+            Vatvruksh Tours and Travels, Jaysingrao Park Garden, Main Road, near Garden, Kagal, Maharashtra 416216
+          </a>
+          <a href="https://maps.google.com/?q=EG+52/151+Daulat+Nagar+Kolhapur" className="footer-contact-item" target="_blank" rel="noopener noreferrer">
+            <span className="footer-icon">
+              <svg {...svgProps}>
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </span>
+            EG 52/151, Daulat Nagar, front of Panayachi Taki, Kolhapur, Maharashtra – 416008
           </a>
           <a href="tel:+919881037257" className="footer-contact-item">
             <span className="footer-icon">

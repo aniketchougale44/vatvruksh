@@ -53,7 +53,12 @@ const Hero = () => {
         </div>
         <div className="hero-actions">
           <a href="tel:+919881037257" className="btn-primary">{t('hero.bookRide')}</a>
-          <a href="https://wa.me/919881037257" className="btn-whatsapp">
+          <a
+            href={`https://wa.me/919881037257?text=${encodeURIComponent("Hi, I'd like to enquire about your cars for rent.")}`}
+            className="btn-whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <WhatsAppIcon />
             {t('hero.whatsapp')}
           </a>

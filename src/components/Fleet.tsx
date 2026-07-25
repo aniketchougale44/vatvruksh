@@ -133,8 +133,10 @@ const Fleet = () => {
                   <span><DriverIcon />{t('fleet.driver')}</span>
                 </div>
                 <a
-                  href={`https://wa.me/919881037257?text=I'm interested in booking ${car.name}`}
+                  href={`https://wa.me/919881037257?text=${encodeURIComponent(`Hi, I'd like to enquire about booking the ${car.name}. Could you share availability and pricing?`)}`}
                   className="btn-book-premium"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {t('fleet.bookNow')}
                 </a>
