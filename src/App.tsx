@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Fleet from './components/Fleet';
 import Services from './components/Services';
+import Company from './components/Company';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { LanguageProvider } from './i18n/LanguageContext';
@@ -14,6 +15,7 @@ function Home() {
       <Hero />
       <Services />
       <Fleet />
+      <Company />
       <Contact />
     </>
   );

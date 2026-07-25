@@ -138,6 +138,29 @@ export const translations: Record<string, Dict> = {
   'footer.contactUs': { en: 'Contact Us', hi: 'संपर्क करें', mr: 'आमच्याशी संपर्क साधा', kn: 'ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ' },
   'footer.rights': { en: 'All rights reserved.', hi: 'सर्वाधिकार सुरक्षित।', mr: 'सर्व हक्क राखीव.', kn: 'ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.' },
 
+  // Company / About section
+  'company.kicker': { en: 'About Us', hi: 'हमारे बारे में', mr: 'आमच्याबद्दल', kn: 'ನಮ್ಮ ಬಗ್ಗೆ' },
+  'company.title': {
+    en: 'Vatvruksh Tours and Travels',
+    hi: 'वटवृक्ष टूर्स एंड ट्रेवल्स',
+    mr: 'वटवृक्ष टूर्स अँड ट्रॅव्हल्स',
+    kn: 'ವಟವೃಕ್ಷ ಟೂರ್ಸ್ ಅಂಡ್ ಟ್ರಾವೆಲ್ಸ್',
+  },
+  'company.established': { en: 'Established 2002', hi: 'स्थापना 2002', mr: 'स्थापना 2002', kn: 'ಸ್ಥಾಪನೆ 2002' },
+  'company.description': {
+    en: 'Your trusted travel partner in Kolhapur since 2002 — 25+ years of service with a spotless, zero-complaint record. Our experienced, uniformed drivers and well-maintained cars make every trip for local sightseeing, outstation travel, airport transfers, and business travel safe and comfortable.',
+    hi: '2002 से कोल्हापुर में आपका भरोसेमंद यात्रा साथी — 25+ वर्षों की सेवा और शून्य शिकायत का बेदाग रिकॉर्ड। हमारे अनुभवी, यूनिफॉर्म पहने ड्राइवर और अच्छी तरह से बनाए रखी गई गाड़ियाँ स्थानीय दर्शनीय स्थलों, आउटस्टेशन यात्रा, हवाई अड्डे परिवहन और व्यावसायिक यात्रा को सुरक्षित और आरामदायक बनाती हैं।',
+    mr: '2002 पासून कोल्हापूरमधील तुमचा विश्वासार्ह प्रवास सोबती — 25+ वर्षांची सेवा आणि शून्य तक्रारींचा निष्कलंक रेकॉर्ड. आमचे अनुभवी, गणवेशातील ड्रायव्हर आणि व्यवस्थित निगा राखलेल्या गाड्या स्थानिक पर्यटन, आउटस्टेशन प्रवास, विमानतळ वाहतूक आणि व्यावसायिक प्रवास सुरक्षित आणि आरामदायक बनवतात.',
+    kn: '2002 ರಿಂದ ಕೊಲ್ಹಾಪುರದಲ್ಲಿ ನಿಮ್ಮ ವಿಶ್ವಾಸಾರ್ಹ ಪ್ರಯಾಣ ಪಾಲುದಾರ — 25+ ವರ್ಷಗಳ ಸೇವೆ ಮತ್ತು ಶೂನ್ಯ ದೂರುಗಳ ನಿಷ್ಕಳಂಕ ದಾಖಲೆ. ನಮ್ಮ ಅನುಭವಿ, ಸಮವಸ್ತ್ರಧಾರಿ ಚಾಲಕರು ಮತ್ತು ಚೆನ್ನಾಗಿ ನಿರ್ವಹಿಸಲಾದ ಕಾರುಗಳು ಸ್ಥಳೀಯ ಪ್ರವಾಸ, ಔಟ್‌ಸ್ಟೇಷನ್ ಪ್ರಯಾಣ, ವಿಮಾನ ನಿಲ್ದಾಣ ವರ್ಗಾವಣೆ ಮತ್ತು ವ್ಯಾಪಾರ ಪ್ರಯಾಣವನ್ನು ಸುರಕ್ಷಿತ ಮತ್ತು ಆರಾಮದಾಯಕವಾಗಿಸುತ್ತವೆ.',
+  },
+  'company.stat.years': { en: 'Years of Service', hi: 'वर्षों की सेवा', mr: 'वर्षांची सेवा', kn: 'ವರ್ಷಗಳ ಸೇವೆ' },
+  'company.stat.cars': { en: 'Car Models', hi: 'गाड़ियों के मॉडल', mr: 'गाड्यांचे मॉडेल', kn: 'ಕಾರ್ ಮಾದರಿಗಳು' },
+  'company.stat.cities': { en: 'Cities Covered', hi: 'शहर कवर किए गए', mr: 'कव्हर केलेली शहरे', kn: 'ಒಳಗೊಂಡ ನಗರಗಳು' },
+  'company.highlight.zeroComplaints': { en: 'Zero Complaints Since 2002', hi: '2002 से कोई शिकायत नहीं', mr: '2002 पासून शून्य तक्रारी', kn: '2002 ರಿಂದ ಶೂನ್ಯ ದೂರುಗಳು' },
+  'company.highlight.uniform': { en: 'Uniformed Drivers', hi: 'यूनिफॉर्म में ड्राइवर', mr: 'गणवेशातील ड्रायव्हर', kn: 'ಸಮವಸ್ತ್ರದಲ್ಲಿ ಚಾಲಕರು' },
+  'company.highlight.water': { en: 'Complimentary Water Bottle', hi: 'मुफ्त पानी की बोतल', mr: 'मोफत पाण्याची बाटली', kn: 'ಉಚಿತ ನೀರಿನ ಬಾಟಲಿ' },
+  'company.highlight.experienced': { en: 'Experienced Drivers', hi: 'अनुभवी ड्राइवर', mr: 'अनुभवी ड्रायव्हर', kn: 'ಅನುಭವಿ ಚಾಲಕರು' },
+
   // Shared modal bits
   'common.close': { en: 'Close', hi: 'बंद करें', mr: 'बंद करा', kn: 'ಮುಚ್ಚಿ' },
   'common.book': { en: 'Book', hi: 'बुक करें', mr: 'बुक करा', kn: 'ಬುಕ್ ಮಾಡಿ' },

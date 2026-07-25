@@ -91,7 +91,10 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/">Vatvruksh</Link>
+        <Link to="/">
+          <img src="/vatvruksh_logo_circle.png" alt="Vatvruksh Tours and Travels" />
+          <span>Vatvruksh</span>
+        </Link>
       </div>
 
       <ul className="navbar-links">

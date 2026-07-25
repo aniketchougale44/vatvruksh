@@ -5,7 +5,7 @@ import './Fleet.css';
 const cars = [
   {
     name: 'Force Urbania',
-    type: 'Mini Bus',
+    type: 'MUV',
     seats: 12,
     ac: true,
     images: ['/cars/Force Urbania/1.jpeg', '/cars/Force Urbania/2.jpeg', '/cars/Force Urbania/3.jpeg', '/cars/Force Urbania/4.jpeg', '/cars/Force Urbania/5.jpeg']
@@ -19,14 +19,21 @@ const cars = [
   },
   {
     name: 'Innova Crysta',
-    type: 'Premium Family Car',
+    type: 'Premium MUV',
     seats: 7,
     ac: true,
     images: ['/cars/Innova Crysta/1.jpeg', '/cars/Innova Crysta/2.jpeg', '/cars/Innova Crysta/3.jpeg', '/cars/Innova Crysta/4.jpeg', '/cars/Innova Crysta/5.jpeg']
   },
   {
+    name: 'Innova Hycross',
+    type: 'Premium MUV',
+    seats: 7,
+    ac: true,
+    images: ['/cars/Innova Hycross/1.jpeg', '/cars/Innova Hycross/2.jpeg', '/cars/Innova Hycross/3.jpeg', '/cars/Innova Hycross/4.jpeg']
+  },
+  {
     name: 'Kia Carens',
-    type: 'Family Car',
+    type: 'MUV',
     seats: 7,
     ac: true,
     images: ['/cars/Kia Carens/1.jpeg', '/cars/Kia Carens/2.jpeg', '/cars/Kia Carens/3.jpeg', '/cars/Kia Carens/4.jpeg', '/cars/Kia Carens/5.jpeg']
@@ -125,7 +132,10 @@ const Fleet = () => {
                   {car.ac && <span><SnowflakeIcon />{t('fleet.ac')}</span>}
                   <span><DriverIcon />{t('fleet.driver')}</span>
                 </div>
-                <a href="tel:+919881037257" className="btn-book-premium">
+                <a
+                  href={`https://wa.me/919881037257?text=I'm interested in booking ${car.name}`}
+                  className="btn-book-premium"
+                >
                   {t('fleet.bookNow')}
                 </a>
               </div>
