@@ -7,6 +7,7 @@ import Services from './components/Services';
 import Company from './components/Company';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import NotFound from './components/NotFound';
 import { LanguageProvider } from './i18n/LanguageContext';
 import './App.css';
 
@@ -33,6 +34,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/cars" element={<Fleet />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           <Footer />

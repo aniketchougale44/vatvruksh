@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vatvruksh Tours and Travels</title>
+    <script>
+      // GitHub Pages has no server-side rewrites, so it serves this file for
+      // any unmatched path. Stash the real path and bounce to the SPA root;
+      // main.tsx restores it before React Router mounts.
+      sessionStorage.setItem('redirectPath', location.pathname + location.search + location.hash);
+      location.replace('/');
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -10,6 +10,16 @@ export const languageNames: Record<Language, string> = {
 type Dict = Record<Language, string>;
 
 export const translations: Record<string, Dict> = {
+  // 404
+  'notfound.heading': { en: 'Page not found', hi: 'पेज नहीं मिला', mr: 'पेज सापडले नाही', kn: 'ಪುಟ ಕಂಡುಬಂದಿಲ್ಲ' },
+  'notfound.subtitle': {
+    en: "The page you're looking for doesn't exist or has moved.",
+    hi: 'आप जिस पेज को ढूंढ रहे हैं वह मौजूद नहीं है या स्थानांतरित हो गया है।',
+    mr: 'तुम्ही शोधत असलेले पेज अस्तित्वात नाही किंवा हलवले गेले आहे.',
+    kn: 'ನೀವು ಹುಡುಕುತ್ತಿರುವ ಪುಟ ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ ಅಥವಾ ಸ್ಥಳಾಂತರಗೊಂಡಿದೆ.',
+  },
+  'notfound.backHome': { en: 'Back to Home', hi: 'होम पर वापस जाएं', mr: 'मुख्यपृष्ठावर परत जा', kn: 'ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ' },
+
   // Navbar
   'nav.home': { en: 'Home', hi: 'होम', mr: 'मुख्यपृष्ठ', kn: 'ಮುಖಪುಟ' },
   'nav.fleet': { en: 'Cars', hi: 'गाड़ियाँ', mr: 'गाड्या', kn: 'ಕಾರುಗಳು' },
