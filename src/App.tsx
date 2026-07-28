@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import FloatingContact from './components/FloatingContact';
 import Hero from './components/Hero';
 import Fleet from './components/Fleet';
 import Services from './components/Services';
@@ -35,6 +36,7 @@ function App() {
             </Routes>
           </main>
           <Footer />
+          <FloatingContact />
         </div>
       </Router>
     </LanguageProvider>
