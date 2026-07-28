@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useSyncedSlideIndex } from '../hooks/useSyncedSlideIndex';
 import { usePhotoSlots } from '../hooks/usePhotoSlots';
+import { PHONE_PRIMARY_TEL } from '../constants';
 import './BusinessTravelModal.css';
 
 interface BusinessTravelModalProps {
@@ -71,7 +72,7 @@ const PhoneIcon = () => (
   </svg>
 );
 
-const CALL_HREF = 'tel:+919881037257';
+const CALL_HREF = PHONE_PRIMARY_TEL;
 
 const features = [
   { icon: <InvoiceIcon />, labelKey: 'business.feature.invoice.label', blurbKey: 'business.feature.invoice.blurb' },

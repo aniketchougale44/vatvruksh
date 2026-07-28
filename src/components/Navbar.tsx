@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 import { Language, languageNames } from '../i18n/translations';
+import { PHONE_PRIMARY_TEL, PHONE_PRIMARY_DISPLAY } from '../constants';
 import './Navbar.css';
 
 const MenuIcon = () => (
@@ -105,8 +106,8 @@ const Navbar = () => {
 
       <div className="navbar-cta">
         <LanguageSwitcher />
-        <a href="tel:+919881037257" className="btn-call"><span className="btn-call-icon">📞</span> {t('nav.callNow')}</a>
-        <a href="tel:+919881037257" className="navbar-call-number">+91 98810 37257</a>
+        <a href={PHONE_PRIMARY_TEL} className="btn-call"><span className="btn-call-icon">📞</span> {t('nav.callNow')}</a>
+        <a href={PHONE_PRIMARY_TEL} className="navbar-call-number">{PHONE_PRIMARY_DISPLAY}</a>
       </div>
 
       <button
@@ -125,10 +126,10 @@ const Navbar = () => {
           <li><Link to="/contact">{t('nav.contact')}</Link></li>
         </ul>
         <LanguageSwitcher className="mobile" />
-        <a href="tel:+919881037257" className="btn-call">
+        <a href={PHONE_PRIMARY_TEL} className="btn-call">
           <span className="btn-call-icon">📞</span> {t('nav.callNow')}
         </a>
-        <a href="tel:+919881037257" className="navbar-call-number">+91 98810 37257</a>
+        <a href={PHONE_PRIMARY_TEL} className="navbar-call-number">{PHONE_PRIMARY_DISPLAY}</a>
       </div>
 
       {menuOpen && <div className="navbar-scrim" onClick={() => setMenuOpen(false)} />}

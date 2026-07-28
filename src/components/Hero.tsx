@@ -1,4 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext';
+import { PHONE_PRIMARY_TEL, whatsappLink } from '../constants';
 import './Hero.css';
 
 const DriverIcon = () => (
@@ -52,9 +53,9 @@ const Hero = () => {
           <span className="badge"><ClockIcon />{t('hero.badge.support')}</span>
         </div>
         <div className="hero-actions">
-          <a href="tel:+919881037257" className="btn-primary">{t('hero.bookRide')}</a>
+          <a href={PHONE_PRIMARY_TEL} className="btn-primary">{t('hero.bookRide')}</a>
           <a
-            href={`https://wa.me/919881037257?text=${encodeURIComponent("Hi, I'd like to enquire about your cars for rent.")}`}
+            href={whatsappLink("Hi, I'd like to enquire about your cars for rent.")}
             className="btn-whatsapp"
             target="_blank"
             rel="noopener noreferrer"

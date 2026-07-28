@@ -1,5 +1,16 @@
 import { useState, FormEvent } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import {
+  PHONE_PRIMARY_DISPLAY,
+  PHONE_SECONDARY_DISPLAY,
+  PHONE_PRIMARY_TEL,
+  CONTACT_EMAIL,
+  ADDRESS_KOLHAPUR,
+  ADDRESS_KOLHAPUR_MAPS_URL,
+  ADDRESS_KAGAL,
+  ADDRESS_KAGAL_MAPS_URL,
+  whatsappLink,
+} from '../constants';
 import './Contact.css';
 
 const svgProps = {
@@ -47,8 +58,11 @@ const Contact = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const message = `Hi, I'd like to enquire about a booking.\nName: ${name}\nPhone: ${phone}\nTrip Details: ${trip}`;
-    window.open(`https://wa.me/919881037257?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    window.open(whatsappLink(message), '_blank', 'noopener,noreferrer');
     setSent(true);
+    setName('');
+    setPhone('');
+    setTrip('');
   };
 
   return (
@@ -59,21 +73,21 @@ const Contact = () => {
           <p className="contact-lead">{t('contact.lead')}</p>
 
           <div className="info-list">
-            <a href="https://maps.google.com/?q=Vatvruksh+Tours+and+Travels+Jaysingrao+Park+Garden+Kagal" className="info-item" target="_blank" rel="noopener noreferrer">
+            <a href={ADDRESS_KOLHAPUR_MAPS_URL} className="info-item" target="_blank" rel="noopener noreferrer">
               <span className="icon-badge"><LocationIcon /></span>
-              <span>Vatvruksh Tours and Travels, Jaysingrao Park Garden, Main Road, near Garden, Kagal, Maharashtra 416216</span>
+              <span>{ADDRESS_KOLHAPUR}</span>
             </a>
-            <a href="https://maps.google.com/?q=EG+52/151+Daulat+Nagar+Kolhapur" className="info-item" target="_blank" rel="noopener noreferrer">
+            <a href={ADDRESS_KAGAL_MAPS_URL} className="info-item" target="_blank" rel="noopener noreferrer">
               <span className="icon-badge"><LocationIcon /></span>
-              <span>EG 52/151, Daulat Nagar, front of Panayachi Taki, Kolhapur, Maharashtra – 416008</span>
+              <span>{ADDRESS_KAGAL}</span>
             </a>
-            <a href="tel:+919881037257" className="info-item">
+            <a href={PHONE_PRIMARY_TEL} className="info-item">
               <span className="icon-badge"><PhoneIcon /></span>
-              <span>+91 98810 37257, +91 83900 44084</span>
+              <span>{PHONE_PRIMARY_DISPLAY}, {PHONE_SECONDARY_DISPLAY}</span>
             </a>
-            <a href="mailto:info@vatvruksh.com" className="info-item">
+            <a href={`mailto:${CONTACT_EMAIL}`} className="info-item">
               <span className="icon-badge"><MailIcon /></span>
-              <span>info@vatvruksh.com</span>
+              <span>{CONTACT_EMAIL}</span>
             </a>
           </div>
 
@@ -81,7 +95,7 @@ const Contact = () => {
             <h3>{t('contact.quickBooking')}</h3>
             <p>{t('contact.quickBookingDesc')}</p>
             <a
-              href={`https://wa.me/919881037257?text=${encodeURIComponent("Hi, I'd like to enquire about your cars for rent.")}`}
+              href={whatsappLink("Hi, I'd like to enquire about your cars for rent.")}
               className="btn-whatsapp-large"
               target="_blank"
               rel="noopener noreferrer"

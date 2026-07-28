@@ -1,6 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { whatsappLink } from '../constants';
+import { useMediaSlots } from '../hooks/useMediaSlots';
 import './Fleet.css';
+
+const BANNER_PHOTO_INTERVAL_MS = 3500;
 
 const cars = [
   {
@@ -75,6 +79,102 @@ const ChevronIcon = ({ direction }: { direction: 'left' | 'right' }) => (
   </svg>
 );
 
+const FleetBanner = () => {
+  const media = useMediaSlots('/gallery', '');
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
+
+  const next = useCallback(() => setIndex((i) => (i + 1) % media.length), [media.length]);
+  const prev = () => setIndex((i) => (i - 1 + media.length) % media.length);
+
+  useEffect(() => {
+    setIndex(0);
+  }, [media.length]);
+
+  // Play the active video from the start; pause every other video.
+  useEffect(() => {
+    media.forEach((item, i) => {
+      const el = videoRefs.current[i];
+      if (!el) return;
+      if (i === index && item.type === 'video' && !paused) {
+        el.currentTime = 0;
+        el.play().catch(() => {});
+      } else {
+        el.pause();
+      }
+    });
+  }, [index, media, paused]);
+
+  // Photos advance on a timer; the video advances itself via onEnded once it
+  // has played in full, so it isn't cut short by a fixed interval.
+  useEffect(() => {
+    if (paused || media.length === 0 || media[index]?.type === 'video') return;
+    const id = setTimeout(next, BANNER_PHOTO_INTERVAL_MS);
+    return () => clearTimeout(id);
+  }, [index, media, paused, next]);
+
+  if (media.length === 0) return null;
+
+  return (
+    <div
+      className="fleet-banner"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {media.length > 1 && (
+        <button className="fleet-banner-nav prev" onClick={prev} aria-label="Previous photo">
+          <ChevronIcon direction="left" />
+        </button>
+      )}
+
+      {media.map((item, i) =>
+        item.type === 'video' ? (
+          <video
+            key={item.src}
+            ref={(el) => {
+              videoRefs.current[i] = el;
+            }}
+            src={item.src}
+            muted
+            playsInline
+            onEnded={next}
+            className={`fleet-banner-slide${i === index ? ' active' : ''}`}
+          />
+        ) : (
+          <img
+            key={item.src}
+            src={item.src}
+            alt="Our full fleet of cars"
+            loading="lazy"
+            className={`fleet-banner-slide${i === index ? ' active' : ''}`}
+          />
+        )
+      )}
+
+      {media.length > 1 && (
+        <button className="fleet-banner-nav next" onClick={next} aria-label="Next photo">
+          <ChevronIcon direction="right" />
+        </button>
+      )}
+
+      {media.length > 1 && (
+        <div className="fleet-banner-dots">
+          {media.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`fleet-banner-dot-btn${i === index ? ' active' : ''}`}
+              aria-label={`Show fleet photo ${i + 1}`}
+              onClick={() => setIndex(i)}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Fleet = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [imgIndex, setImgIndex] = useState(0);
@@ -106,6 +206,8 @@ const Fleet = () => {
       <h2>{t('fleet.heading')}</h2>
       <p>{t('fleet.subtitle')}</p>
 
+      <FleetBanner />
+
       <div className="fleet-stage">
         <button className="fleet-nav prev" onClick={prev} aria-label="Previous vehicle">
           <ChevronIcon direction="left" />
@@ -133,7 +235,7 @@ const Fleet = () => {
                   <span><DriverIcon />{t('fleet.driver')}</span>
                 </div>
                 <a
-                  href={`https://wa.me/919881037257?text=${encodeURIComponent(`Hi, I'd like to enquire about booking the ${car.name}. Could you share availability and pricing?`)}`}
+                  href={whatsappLink(`Hi, I'd like to enquire about booking the ${car.name}. Could you share availability and pricing?`)}
                   className="btn-book-premium"
                   target="_blank"
                   rel="noopener noreferrer"

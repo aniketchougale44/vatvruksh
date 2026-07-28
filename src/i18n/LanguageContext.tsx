@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useMemo, ReactNode } from 'react';
+import { createContext, useContext, useState, useMemo, useEffect, ReactNode } from 'react';
 import { Language, translations } from './translations';
 
 const STORAGE_KEY = 'vatvruksh-language';
@@ -24,6 +24,10 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     window.localStorage.setItem(STORAGE_KEY, lang);
   };
 
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
   const t = useMemo(
     () => (key: string) => translations[key]?.[language] ?? translations[key]?.en ?? key,
     [language]
@@ -36,6 +40,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components -- context + hook are kept together intentionally
 export const useLanguage = () => {
   const ctx = useContext(LanguageContext);
   if (!ctx) throw new Error('useLanguage must be used within a LanguageProvider');
