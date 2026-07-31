@@ -10,7 +10,7 @@ const cars = [
   {
     name: 'Force Urbania',
     type: 'MUV',
-    seats: 12,
+    seats: 17,
     ac: true,
     images: ['/cars/Force Urbania/1.jpeg', '/cars/Force Urbania/2.jpeg', '/cars/Force Urbania/3.jpeg', '/cars/Force Urbania/4.jpeg', '/cars/Force Urbania/5.jpeg']
   },
