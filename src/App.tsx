@@ -36,7 +36,12 @@ function CarsPage() {
     'Our Fleet - Cars for Rent in Kolhapur | Vatvruksh Tours and Travels',
     'Browse our fleet of well-maintained cars available for rent in Kolhapur, including sedans and SUVs for local and outstation trips with professional drivers.'
   );
-  return <Fleet />;
+  return (
+    <>
+      <h1 className="sr-only">Car Rental Fleet in Kolhapur — Sedans, SUVs &amp; Tempo Travellers</h1>
+      <Fleet />
+    </>
+  );
 }
 
 function ContactPage() {
@@ -44,7 +49,12 @@ function ContactPage() {
     'Contact Us | Vatvruksh Tours and Travels, Kolhapur',
     'Get in touch with Vatvruksh Tours and Travels for car rental bookings in Kolhapur and Kagal. Call, WhatsApp, or visit us for the best rates on local and outstation trips.'
   );
-  return <Contact />;
+  return (
+    <>
+      <h1 className="sr-only">Contact Vatvruksh Tours and Travels — Car Rental in Kolhapur</h1>
+      <Contact />
+    </>
+  );
 }
 
 function App() {
