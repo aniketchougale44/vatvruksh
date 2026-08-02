@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import { PHONE_PRIMARY_TEL, PHONE_PRIMARY_DISPLAY, whatsappLink } from '../constants';
 import { getLocationBySlug, locations } from '../data/locations';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
+import { useCanonical } from '../hooks/useCanonical';
 import { useJsonLd } from '../hooks/useJsonLd';
 import NotFound from './NotFound';
 import './LocationPage.css';
@@ -21,6 +22,8 @@ const LocationPage = () => {
     location?.metaDescription ?? ''
   );
 
+  useCanonical(slug ? `/car-rental-${slug}` : '/');
+
   useJsonLd(
     `faq-jsonld-${slug ?? 'none'}`,
     location
@@ -35,6 +38,30 @@ const LocationPage = () => {
               text: faq.answer,
             },
           })),
+        }
+      : null
+  );
+
+  useJsonLd(
+    `breadcrumb-jsonld-${slug ?? 'none'}`,
+    location
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: 'Home',
+              item: 'https://vatvrukshcarrental.com/',
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: `Car Rental in ${location.city}`,
+              item: `https://vatvrukshcarrental.com/car-rental-${location.slug}`,
+            },
+          ],
         }
       : null
   );
