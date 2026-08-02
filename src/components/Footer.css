@@ -18,9 +18,9 @@
 
 .footer-content {
   display: grid;
-  grid-template-columns: 2fr 1fr 1.4fr;
+  grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
   gap: 3rem;
-  max-width: 1150px;
+  max-width: 1300px;
   margin: 0 auto 2.5rem;
 }
 
@@ -121,6 +121,12 @@
   text-align: center;
   font-size: 0.88rem;
   color: #8a938a;
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 768px) {

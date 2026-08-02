@@ -10,6 +10,7 @@ import {
   ADDRESS_KAGAL,
   ADDRESS_KAGAL_MAPS_URL,
 } from '../constants';
+import { locations } from '../data/locations';
 import './Footer.css';
 
 const svgProps = {
@@ -38,6 +39,18 @@ const Footer = () => {
             <li><Link to="/">{t('nav.home')}</Link></li>
             <li><Link to="/cars">{t('nav.fleet')}</Link></li>
             <li><Link to="/contact">{t('nav.contact')}</Link></li>
+          </ul>
+        </div>
+
+        <div className="footer-links">
+          <h4>Areas We Serve</h4>
+          <ul>
+            <li><Link to="/">Kolhapur</Link></li>
+            {locations.map((loc) => (
+              <li key={loc.slug}>
+                <Link to={`/car-rental-${loc.slug}`}>{loc.city}</Link>
+              </li>
+            ))}
           </ul>
         </div>
 

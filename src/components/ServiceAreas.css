@@ -1,0 +1,59 @@
+.service-areas-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 5rem 6%;
+  background: #fff;
+}
+
+.service-areas-kicker {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary-color);
+}
+
+.service-areas-section h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  font-weight: 700;
+  color: #1b2a1b;
+  max-width: 700px;
+}
+
+.service-areas-section > p {
+  max-width: 680px;
+  color: #4a564a;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.service-areas-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.service-area-chip {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(249, 168, 37, 0.1), rgba(46, 125, 50, 0.06));
+  border: 1px solid rgba(249, 168, 37, 0.22);
+  border-radius: 999px;
+  padding: 0.55rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #3e4a3e;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.service-area-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(20, 40, 20, 0.1);
+}
