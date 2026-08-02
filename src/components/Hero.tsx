@@ -37,6 +37,7 @@ const Hero = () => {
       <video
         className="hero-video"
         src="/innova_crysta.mp4"
+        poster="/innova_crysta-poster.jpg"
         autoPlay
         loop
         muted
