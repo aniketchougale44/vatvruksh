@@ -10,7 +10,6 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import NotFound from './components/NotFound';
 import LocationPage from './components/LocationPage';
-import { locations } from './data/locations';
 import { LanguageProvider } from './i18n/LanguageContext';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 import './App.css';
@@ -59,9 +58,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/cars" element={<CarsPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              {locations.map((loc) => (
-                <Route key={loc.slug} path={`/car-rental-${loc.slug}`} element={<LocationPage />} />
-              ))}
+              <Route path="/car-rental-:slug" element={<LocationPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
