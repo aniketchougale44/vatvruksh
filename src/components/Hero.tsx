@@ -36,7 +36,7 @@ const Hero = () => {
     <section className="hero-container">
       <video
         className="hero-video"
-        src="/family_trip.mp4"
+        src="/innova_crysta.mp4"
         autoPlay
         loop
         muted
