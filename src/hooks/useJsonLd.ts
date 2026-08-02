@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 
-export function useJsonLd(id: string, data: unknown) {
+export function useJsonLd(id: string, data: unknown | null) {
   useEffect(() => {
+    if (!data) return;
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.id = id;

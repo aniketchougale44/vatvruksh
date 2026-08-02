@@ -16,25 +16,32 @@ const LocationPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const location = slug ? getLocationBySlug(slug) : undefined;
 
+  useDocumentMeta(
+    location?.metaTitle ?? 'Vatvruksh Tours and Travels',
+    location?.metaDescription ?? ''
+  );
+
+  useJsonLd(
+    `faq-jsonld-${slug ?? 'none'}`,
+    location
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: location.faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          })),
+        }
+      : null
+  );
+
   if (!location) return <NotFound />;
 
-  const { city, state, distanceFromKolhapur, metaTitle, metaDescription, tagline, about, highlights, faqs } = location;
-
-  useDocumentMeta(metaTitle, metaDescription);
-
-  useJsonLd(`faq-jsonld-${location.slug}`, {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  });
-
+  const { city, state, distanceFromKolhapur, tagline, about, highlights, faqs } = location;
   const otherLocations = locations.filter((loc) => loc.slug !== location.slug);
 
   return (
